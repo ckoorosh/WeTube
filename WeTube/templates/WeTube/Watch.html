@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>WeTube</title>
+	<link href="main.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body style="background-color:#181818;">
+    <div class="navbar">
+        <div>
+            <a href="#" class="fa fa-bars fa-2x" style="color:white"></a>
+		    <a href="#home"><img src="./images/WeTube-Logo.png" alt="WeTube" class="logo"/></a>
+        </div>
+        <div>
+            <b><input type="search" placeholder="Search" class="search"></b>
+            <c><button class="search-button"><i class="fa fa-search"></i></button></c>
+        </div>
+        <div>
+            <account>
+                <a href="Login.html" class="fa fa-round fa-user"></a>
+            </account>
+            <upload>
+                <a href="Upload.html" class="fa fa-round fa-upload"></a>
+            </upload>
+        </div>
+        
+	</div>
+    <div class="main">
+        <video controls class="video"> <source src="../Video/test.mp4" type="video/mp4"> </video>
+        <div>
+            <h1 class="video-title">The title of the movie goes here</h1>
+        </div>
+        <div class="video-details">
+            <div>
+                <info>552,352 views</info>
+            </div>
+            <div>
+                <info> | </info>
+            </div>
+            <div>
+                <info>Aug 31, 2018</info>
+            </div>
+            <div style="margin-left: 400px">
+                <action>
+                    <i class="fa fa-button fa-heart"></i>
+                    <a>LIKE</a>
+                </action>
+                <action>
+                    <i class="fa fa-button fa-heart-crack"></i>
+                    <a>HATE</a>
+                </action>
+            </div>
+        </div>
+        <hr class="sep">
+        <div class="video-author">
+            <div>
+                <info><i class="fa fa-autor fa-user-circle fa-3x"></i></info>
+            </div>
+            <div>
+                <info>The Author</info>
+            </div>
+        </div>
+        <div class="video-description">
+            <div style="margin-left: 120px;">
+                <span>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </span>
+            </div>
+        </div>
+        <hr class="sep">
+        <div>
+            <div>
+                <h2 class="comments-tilte">1000 Comments</h2>
+            </div>
+            <div>
+                <textarea class="comment-input" placeholder="Add a comment ..."></textarea>
+            </div>
+            <div>
+                <a><button class="comment-button">Cancel</button></a>
+                <a><button class="comment-button">Comment</button></a>
+            </div>
+        </div>
+        <div style="margin-top: 50px">
+            <div style="margin-top: 25px">
+                <div class="comment-author">
+                    <div>
+                        <info><i class="fa fa-user-circle fa-2x"></i></info>
+                    </div>
+                    <div>
+                        <info>Mohammadreza</info>
+                    </div>
+                </div>
+                <div class="comment-message">
+                    <div style="margin-left: 67px;">
+                        <span>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 25px">
+                <div class="comment-author">
+                    <div>
+                        <info><i class="fa fa-user-circle fa-2x"></i></info>
+                    </div>
+                    <div>
+                        <info>Matin</info>
+                    </div>
+                </div>
+                <div class="comment-message">
+                    <div style="margin-left: 67px;">
+                        <span>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><script>
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>
