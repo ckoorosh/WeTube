@@ -204,3 +204,44 @@ hr.sep {
     line-height: 1.7rem;
     color: white;
 }
+footer {
+    font-family: "Roboto", "Arial", sans-serif;
+    padding: 100px 20px 20px;
+    text-align: center;
+    color: #767676;
+    margin: 10px;
+}
+.home-title {
+    font-family: "Roboto Bold", "Arial", sans-serif;
+    font-size: 1.8rem;
+    display: block;
+    color: white;
+}
+.box {
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(4, minmax(100px, auto));
+}
+.box a {
+    transition: transform .3s;
+    text-decoration: none;
+}
+.box a:hover {
+    transition: transform .3s;
+    transform: scale(1.02);
+}
+.box img {
+    border-radius: 10px;
+}
+a info-title {
+    font-family: "Roboto", "Arial", sans-serif;
+    line-height: 1.7rem;
+    color: white;
+    align-content: center;
+}
+a info-author {
+    font-family: "Roboto", "Arial", sans-serif;
+    font-size: 14px;
+    color: #B1B1B1;
+    align-content: center;
+}
