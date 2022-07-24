@@ -1,9 +1,10 @@
+{% load static %}
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>WeTube</title>
-	<link href="main.css" rel="stylesheet" type="text/css">
+	<link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 
@@ -11,7 +12,7 @@
     <div class="navbar">
         <div>
             <a href="#" class="fa fa-bars fa-2x" style="color:white"></a>
-		    <a href="Home.html"><img src="./images/WeTube-Logo.png" alt="WeTube" class="logo"/></a>
+		    <a href="{% url 'home' %}"><img src="{% static 'images/WeTube-Logo.png' %}" alt="WeTube" class="logo"/></a>
         </div>
         <div>
             <b><input type="search" placeholder="Search" class="search"></b>
@@ -19,10 +20,15 @@
         </div>
         <div>
             <account>
-                <a href="Login.html" class="fa fa-round fa-user"></a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'login' %}" class="fa fa-round fa-user"></a>
+                {% else %}
+                <!-- TODO: Should be ACCOUNT PAGE -->
+                <a href="{% url 'signup' %}" class="fa fa-round fa-user"></a>
+                {% endif %}
             </account>
             <upload>
-                <a href="Upload.html" class="fa fa-round fa-upload"></a>
+                <a href="{% url 'upload' %}" class="fa fa-round fa-upload"></a>
             </upload>
         </div>
         
@@ -32,7 +38,7 @@
           <div>
               <h1 class="home-title">Popular on WeTube</h1>
               <div class="box">
-                  <a href="Watch.html">
+                  <a href="watch.html">
                       <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt=""> 
                       <div>
                           <info-title> How to create a WeTube account! </info-title>
@@ -44,7 +50,7 @@
                           <info-author> 15K views &#8226; 11 hours ago </info-author>
                       </div>
                   </a>
-                  <a href="Watch.html">
+                  <a href="watch.html">
                       <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt=""> 
                       <div>
                           <info-title> How to create a WeTube account! </info-title>
@@ -55,7 +61,7 @@
                       <div>
                           <info-author> 15K views &#8226; 11 hours ago </info-author>
                       </div>
-                  </a><a href="Watch.html">
+                  </a><a href="watch.html">
                       <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt=""> 
                       <div>
                           <info-title> How to create a WeTube account! </info-title>
@@ -66,7 +72,7 @@
                       <div>
                           <info-author> 15K views &#8226; 11 hours ago </info-author>
                       </div>
-                  </a><a href="Watch.html">
+                  </a><a href="watch.html">
                       <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt=""> 
                       <div>
                           <info-title> How to create a WeTube account! </info-title>
@@ -78,7 +84,7 @@
                           <info-author> 15K views &#8226; 11 hours ago </info-author>
                       </div>
                   </a>
-                  <a href="Watch.html">
+                  <a href="watch.html">
                       <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt=""> 
                       <div>
                           <info-title> How to create a WeTube account! </info-title>
@@ -89,7 +95,7 @@
                       <div>
                           <info-author> 15K views &#8226; 11 hours ago </info-author>
                       </div>
-                  </a><a href="Watch.html">
+                  </a><a href="watch.html">
                       <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt=""> 
                       <div>
                           <info-title> How to create a WeTube account! </info-title>

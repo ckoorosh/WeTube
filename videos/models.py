@@ -5,12 +5,17 @@ from accounts.models import User
 
 
 class Video(models.Model):
+    file = models.FileField(default='', upload_to='')
     title = models.CharField(max_length=100)
     date_posted = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.TextField(default='')
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     banned = models.BooleanField(default=False)  # To see if the video is banned or not
+
+    def __str__(self):
+        return self.title
 
     def ban(self):
         self.banned = True

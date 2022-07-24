@@ -1,9 +1,10 @@
+{% load static %}
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>WeTube</title>
-	<link href="main.css" rel="stylesheet" type="text/css">
+	<link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 
@@ -11,7 +12,7 @@
     <div class="navbar">
         <div>
             <a href="#" class="fa fa-bars fa-2x" style="color:white"></a>
-		    <a href="Home.html"><img src="./images/WeTube-Logo.png" alt="WeTube" class="logo"/></a>
+		    <a href="{% url 'home' %}"><img src="{% static 'images/WeTube-Logo.png' %}" alt="WeTube" class="logo"/></a>
         </div>
         <div>
             <b><input type="search" placeholder="Search" class="search"></b>
@@ -19,18 +20,18 @@
         </div>
         <div>
             <account>
-                <a href="Login.html" class="fa fa-round fa-user"></a>
+                <a href="login.html" class="fa fa-round fa-user"></a>
             </account>
             <upload>
-                <a href="Upload.html" class="fa fa-round fa-upload"></a>
+                <a href="upload.html" class="fa fa-round fa-upload"></a>
             </upload>
         </div>
         
 	</div>
     <div class="main">
-        <video controls class="video"> <source src="../Video/test.mp4" type="video/mp4"> </video>
+        <video controls class="video"> <source src="{{ object.file.url }}" type="video/mp4"> </video>
         <div>
-            <h1 class="video-title">The title of the movie goes here</h1>
+            <h1 class="video-title">{{ object.title }}</h1>
         </div>
         <div class="video-details">
             <div>
@@ -40,7 +41,7 @@
                 <info> | </info>
             </div>
             <div>
-                <info>Aug 31, 2018</info>
+                <info>{{ object.date_posted }}</info>
             </div>
             <div style="margin-left: 400px">
                 <action>
@@ -51,6 +52,12 @@
                     <i class="fa fa-button fa-heart-crack"></i>
                     <a>HATE</a>
                 </action>
+                {% if user.is_admin %}
+                <action>
+                    <i class="fa fa-button fa-ban"></i>
+                    <a>BAN</a>
+                </action>
+                {% endif %}
             </div>
         </div>
         <hr class="sep">
@@ -59,14 +66,13 @@
                 <info><i class="fa fa-autor fa-user-circle fa-3x"></i></info>
             </div>
             <div>
-                <info>The Author</info>
+                <info>{{ object.user.username }}</info>
             </div>
         </div>
         <div class="video-description">
             <div style="margin-left: 120px;">
                 <span>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    {{ object.description }}
                 </span>
             </div>
         </div>
