@@ -6,7 +6,7 @@ from accounts.models import User
 
 class Video(models.Model):
     file = models.FileField(default='', upload_to='')
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=1000)
     date_posted = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(default='No description yet ...')

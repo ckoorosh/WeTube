@@ -47,9 +47,14 @@
 <!--							</button>-->
 <!--						</div>-->
 <!--					</div>-->
+
 					<form method="post" enctype="multipart/form-data">
-								{% csrf_token %}
-								{{ form.as_p }}
+						{% csrf_token %}
+<!--						<div class="wrap-input100 validate-input">-->
+<!--							<input class="input100" type="text" name="title" for="title">-->
+<!--							<span class="focus-input100" data-placeholder="Title"></span>-->
+<!--						</div>-->
+						{{ form.as_p }}
 						<div class="container-login100-form-btn">
 							<div class="wrap-login100-form-btn">
 								<div class="upload100-form-bgbtn"></div>

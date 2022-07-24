@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, CreateView
 from .models import Video
+from .forms import UploadForm
 
 
 def home(request):
@@ -22,7 +23,8 @@ class UploadView(CreateView):
     model = Video
     success_url = "/"
     template_name = 'videos/upload.html'
-    fields = ['file']
+    fields = ['title', 'description', 'file']
+    # form_class = UploadForm
 
     def form_valid(self, form):
         form.instance.user = self.request.user
