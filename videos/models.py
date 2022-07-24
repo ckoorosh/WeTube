@@ -26,6 +26,7 @@ class Comment(models.Model):
     body = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    date_posted = models.DateTimeField(default=timezone.now)
 
 
 class Tag(models.Model):

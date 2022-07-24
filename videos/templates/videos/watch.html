@@ -29,9 +29,9 @@
         
 	</div>
     <div class="main">
-        <video controls class="video"> <source src="{{ object.file.url }}" type="video/mp4"> </video>
+        <video controls class="video"> <source src="{{ video.file.url }}" type="video/mp4"> </video>
         <div>
-            <h1 class="video-title">{{ object.title }}</h1>
+            <h1 class="video-title">{{ video.title }}</h1>
         </div>
         <div class="video-details">
             <div>
@@ -41,7 +41,7 @@
                 <info> | </info>
             </div>
             <div>
-                <info>{{ object.date_posted }}</info>
+                <info>{{ video.date_posted }}</info>
             </div>
             <div style="margin-left: 400px">
                 <action>
@@ -66,13 +66,13 @@
                 <info><i class="fa fa-autor fa-user-circle fa-3x"></i></info>
             </div>
             <div>
-                <info>{{ object.user.username }}</info>
+                <info>{{ video.user.username }}</info>
             </div>
         </div>
         <div class="video-description">
             <div style="margin-left: 120px;">
                 <span>
-                    {{ object.description }}
+                    {{ video.description }}
                 </span>
             </div>
         </div>
@@ -90,40 +90,25 @@
             </div>
         </div>
         <div style="margin-top: 50px">
-            <div style="margin-top: 25px">
-                <div class="comment-author">
-                    <div>
-                        <info><i class="fa fa-user-circle fa-2x"></i></info>
+            {% for comment in comments %}
+                <div style="margin-top: 25px">
+                    <div class="comment-author">
+                        <div>
+                            <info><i class="fa fa-user-circle fa-2x"></i></info>
+                        </div>
+                        <div>
+                            <info>{{ comment.user.username }}</info>
+                        </div>
                     </div>
-                    <div>
-                        <info>Mohammadreza</info>
-                    </div>
-                </div>
-                <div class="comment-message">
-                    <div style="margin-left: 67px;">
-                        <span>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-top: 25px">
-                <div class="comment-author">
-                    <div>
-                        <info><i class="fa fa-user-circle fa-2x"></i></info>
-                    </div>
-                    <div>
-                        <info>Matin</info>
+                    <div class="comment-message">
+                        <div style="margin-left: 67px;">
+                            <span>
+                                {{ comment.body }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="comment-message">
-                    <div style="margin-left: 67px;">
-                        <span>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        </span>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
     

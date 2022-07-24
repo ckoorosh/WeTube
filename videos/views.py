@@ -31,6 +31,14 @@ class UploadView(CreateView):
         return super().form_valid(form)
 
 
-class WatchView(DetailView):
-    template_name = "videos/watch.html"
-    model = Video
+def watch(request, pk):
+    video = Video.objects.get(pk=pk)
+    comments = video.comment_set.all()
+    if video:
+        context = {
+            'video': video,
+            'comments': comments
+        }
+        return render(request, 'videos/watch.html', context=context)
+    else:
+        return home(request)
