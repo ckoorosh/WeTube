@@ -37,4 +37,4 @@ class Ticket(models.Model):
     title = models.CharField(max_length=30)
     body = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(choices=TICKET_STATUS, default="n")
+    status = models.CharField(max_length=30, choices=TICKET_STATUS, default="n")
