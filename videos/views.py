@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import DetailView
+from django.views.generic import DetailView, CreateView
 from .models import Video
 
 
@@ -18,22 +18,15 @@ def signup(request):
     return render(request, 'videos/signup.html')
 
 
-def upload(request):
-    if request.user.is_authenticated:
-        print('YES')
-        return render(request, 'videos/upload.html')
-    else:
-        return render(request, 'videos/login.html')
+class UploadView(CreateView):
+    model = Video
+    success_url = "/"
+    template_name = 'videos/upload.html'
+    fields = ['file']
 
-
-def watch(request):
-    if request.method == "POST":
-        query = request.POST.get('id', None)
-        if query:
-            results = VidStream.objects.filter(title__contains=query)
-            return render(request, 'stream/search.html', {'videos': results})
-
-    return render(request, 'videos/home.html')
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class WatchView(DetailView):
