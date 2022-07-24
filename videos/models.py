@@ -10,6 +10,7 @@ class Video(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(default='No description yet ...')
+    views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     banned = models.BooleanField(default=False)  # To see if the video is banned or not

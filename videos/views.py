@@ -33,6 +33,8 @@ class UploadView(CreateView):
 
 def watch(request, pk):
     video = Video.objects.get(pk=pk)
+    video.views += 1
+    video.save()
     comments = video.comment_set.all()
     if video:
         context = {
