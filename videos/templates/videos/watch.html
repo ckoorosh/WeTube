@@ -14,10 +14,13 @@
             <a href="#" class="fa fa-bars fa-2x" style="color:white"></a>
 		    <a href="{% url 'home' %}"><img src="{% static 'images/WeTube-Logo.png' %}" alt="WeTube" class="logo"/></a>
         </div>
-        <div>
-            <b><input type="search" placeholder="Search" class="search"></b>
-            <c><button class="search-button"><i class="fa fa-search"></i></button></c>
-        </div>
+        <form method="POST" action="{% url 'search' %}">
+            {% csrf_token %}
+            <div>
+                <b><input type="search" placeholder="Search" class="search" name="title"></b>
+                <c><button class="search-button"><i class="fa fa-search"></i></button></c>
+            </div>
+        </form>
         <div>
             <account>
                 <a href="login.html" class="fa fa-round fa-user"></a>

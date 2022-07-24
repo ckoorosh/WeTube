@@ -19,11 +19,22 @@ def signup(request):
     return render(request, 'videos/signup.html')
 
 
+def search(request):
+    if request.method == "POST":
+        query = request.POST.get('title', None)
+        if query:
+            results = Video.objects.filter(title__contains=query)
+            return render(request, 'videos/search.html', {'videos': results, 'query': query})
+
+    return render(request, 'videos/home.html')
+
+
 class UploadView(CreateView):
     model = Video
     success_url = "/"
     template_name = 'videos/upload.html'
     fields = ['title', 'description', 'file']
+
     # form_class = UploadForm
 
     def form_valid(self, form):

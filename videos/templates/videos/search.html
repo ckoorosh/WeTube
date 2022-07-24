@@ -17,7 +17,7 @@
         <form method="POST" action="{% url 'search' %}">
             {% csrf_token %}
             <div>
-                <b><input type="search" placeholder="Search" class="search" name="title"></b>
+                <b><input type="search" placeholder="{{ query }}" class="search" name="title"></b>
                 <c><button class="search-button"><i class="fa fa-search"></i></button></c>
             </div>
         </form>
@@ -39,7 +39,7 @@
     <div class="main">
         <section>
           <div>
-              <h1 class="home-title">Popular on WeTube</h1>
+              <h1 class="home-title">Results on WeTube</h1>
               <div class="box">
                   {% for video in videos%}
                       <a href="{% url 'watch' video.id %}">
@@ -56,10 +56,6 @@
                       </a>
                   {% endfor %}
               </div>
-          </div>
-        
-          <h1 class="home-title">Trending Now</h1>
-          <div class="box">
           </div>
         </section>
     </div>

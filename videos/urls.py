@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('login', views.login, name='login'),
     path('signup', views.signup, name='signup'),
+    path('search', views.search, name='search'),
     path('upload', UploadView.as_view(), name='upload'),
     path('watch/<int:pk>/', views.watch, name='watch')
 ]
