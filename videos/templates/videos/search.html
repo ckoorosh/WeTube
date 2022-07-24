@@ -17,7 +17,7 @@
         <form method="POST" action="{% url 'search' %}">
             {% csrf_token %}
             <div>
-                <b><input type="search" placeholder="{{ query }}" class="search" name="title"></b>
+                <b><input type="search" placeholder="{{ query }}" class="search" name="title" required></b>
                 <c><button class="search-button"><i class="fa fa-search"></i></button></c>
             </div>
         </form>

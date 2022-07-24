@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import DetailView, CreateView
-from .models import Video
+from .models import Video, Comment
 from .forms import UploadForm
 
 
@@ -27,6 +27,17 @@ def search(request):
             return render(request, 'videos/search.html', {'videos': results, 'query': query})
 
     return render(request, 'videos/home.html')
+
+
+def send_comment(request, pk):
+    if request.method == "POST":
+        query = request.POST.get('comment', None)
+        if query:
+            video = Video.objects.get(pk=pk)
+            comment = Comment(body=query, user=request.user, video=video)
+            comment.save()
+
+    return redirect(request.META['HTTP_REFERER'])
 
 
 class UploadView(CreateView):

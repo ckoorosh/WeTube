@@ -10,6 +10,7 @@ urlpatterns = [
     path('signup', views.signup, name='signup'),
     path('search', views.search, name='search'),
     path('upload', UploadView.as_view(), name='upload'),
+    path('comment/<int:pk>/', views.send_comment, name='comment'),
     path('watch/<int:pk>/', views.watch, name='watch')
 ]
 
