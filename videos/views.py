@@ -19,6 +19,19 @@ def signup(request):
     return render(request, 'videos/signup.html')
 
 
+class UploadView(CreateView):
+    model = Video
+    success_url = "/"
+    template_name = 'videos/upload.html'
+    fields = ['title', 'description', 'file']
+
+    # form_class = UploadForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
 def search(request):
     if request.method == "POST":
         query = request.POST.get('title', None)
@@ -40,25 +53,51 @@ def send_comment(request, pk):
     return redirect(request.META['HTTP_REFERER'])
 
 
-class UploadView(CreateView):
-    model = Video
-    success_url = "/"
-    template_name = 'videos/upload.html'
-    fields = ['title', 'description', 'file']
+def like(request, pk):
+    video = Video.objects.get(pk=pk)
+    if video:
+        user = request.user
+        if video.likes.filter(pk=user.pk).exists():
+            print('AAA')
+            video.likes.remove(user)
+            video.likes_count -= 1
+        else:
+            if video.dislikes.filter(pk=user.pk).exists():
+                video.dislikes.remove(user)
+                video.dislikes_count -= 1
+            video.likes.add(user)
+            video.likes_count += 1
+        video.save()
+        user.save()
 
-    # form_class = UploadForm
+    return redirect(request.META['HTTP_REFERER'])
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+
+def dislike(request, pk):
+    video = Video.objects.get(pk=pk)
+    if video:
+        user = request.user
+        if video.dislikes.filter(pk=user.pk).exists():
+            video.dislikes.remove(user)
+            video.dislikes_count -= 1
+        else:
+            if video.likes.filter(pk=user.pk).exists():
+                video.likes.remove(user)
+                video.likes_count -= 1
+            video.dislikes.add(user)
+            video.dislikes_count += 1
+        video.save()
+        user.save()
+
+    return redirect(request.META['HTTP_REFERER'])
 
 
 def watch(request, pk):
     video = Video.objects.get(pk=pk)
-    video.views += 1
-    video.save()
-    comments = video.comment_set.all()
     if video:
+        video.views += 1
+        video.save()
+        comments = video.comment_set.all()
         context = {
             'video': video,
             'comments': comments
