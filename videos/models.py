@@ -1,10 +1,12 @@
 from django.db import models
+from django.utils import timezone
 
-# Create your models here.
 from accounts.models import User
 
 
 class Video(models.Model):
+    title = models.CharField(max_length=100)
+    date_posted = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)

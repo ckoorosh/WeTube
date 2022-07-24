@@ -206,10 +206,11 @@ hr.sep {
 }
 footer {
     font-family: "Roboto", "Arial", sans-serif;
-    padding: 100px 20px 20px;
+    padding: 100px 0px 20px;
     text-align: center;
     color: #767676;
-    margin: 10px;
+    margin: 50px 0px 0px;
+    background-color: #202020;
 }
 .home-title {
     font-family: "Roboto Bold", "Arial", sans-serif;
