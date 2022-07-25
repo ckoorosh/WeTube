@@ -10,13 +10,7 @@ def signin(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
-        print(username)
-        print(password)
-        user = User.objects.get(username=username)
-        print(user.password)
-        print(user.check_password(password))
         user = authenticate(request, username=username, password=password)
-        print(user)
         if user:
             login(request, user)
             return redirect('home')

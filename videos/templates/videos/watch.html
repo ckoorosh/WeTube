@@ -60,8 +60,7 @@
                 <i class="fa fa-button fa-heart"></i>
                 {% if video.likes_count %}
                 {% if user.is_authenticated %}
-                <a style="text-decoration: none; color: white;" href="{% url 'like' video.id %}">{{ video.likes_count
-                    }}</a>
+                <a style="text-decoration: none; color: white;" href="{% url 'like' video.id %}">{{ video.likes_count }}</a>
                 {% else %}
                 <a style="text-decoration: none; color: white;" href="{% url 'login' %}">{{ video.likes_count }}</a>
                 {% endif %}
@@ -120,7 +119,7 @@
         {% csrf_token %}
         <div>
             <div>
-                <h2 class="comments-tilte">1000 Comments</h2>
+                <h2 class="comments-title">1000 Comments</h2>
             </div>
             <div>
                 <textarea class="comment-input" placeholder="Add a comment ..." name="comment" required></textarea>

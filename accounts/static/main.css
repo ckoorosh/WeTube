@@ -157,7 +157,7 @@ hr.sep {
     border: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
-.comments-tilte {
+.comments-title {
     font-family: "Roboto", "Arial", sans-serif;
     font-size: 1.2rem;
     display: block;
@@ -221,7 +221,7 @@ footer {
 .box {
     display: grid;
     grid-gap: 30px;
-    grid-template-columns: repeat(1, minmax(100px, auto));
+    grid-template-columns: repeat(4, minmax(100px, auto));
 }
 .box a {
     transition: transform .3s;

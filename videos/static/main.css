@@ -157,7 +157,7 @@ hr.sep {
     border: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
-.comments-tilte {
+.comments-title {
     font-family: "Roboto", "Arial", sans-serif;
     font-size: 1.2rem;
     display: block;
@@ -173,6 +173,7 @@ hr.sep {
     background-color: #121212;
     border: hidden;
     color: hsla(0, 0%, 100%, 0.88);
+    font-family: Roboto, sans-serif;
 }
 .comment-button {
     height: 30px;
