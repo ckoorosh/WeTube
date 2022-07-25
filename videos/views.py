@@ -43,7 +43,6 @@ def like(request, pk):
     if video:
         user = request.user
         if video.likes.filter(pk=user.pk).exists():
-            print('AAA')
             video.likes.remove(user)
             video.likes_count -= 1
         else:
