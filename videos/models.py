@@ -36,6 +36,12 @@ class Tag(models.Model):
     videos = models.ManyToManyField(Video)
 
 
+class TicketResponse(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+
+
 class Ticket(models.Model):
     TICKET_STATUS = (
         ("n", "new"),
@@ -45,5 +51,7 @@ class Ticket(models.Model):
     )
     title = models.CharField(max_length=30)
     body = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=30, choices=TICKET_STATUS, default="n")
+    response = models.ForeignKey(TicketResponse, on_delete=models.CASCADE, default=None)

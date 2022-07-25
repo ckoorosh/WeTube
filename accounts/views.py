@@ -57,4 +57,14 @@ def logout_user(request):
 
 
 def show_account(request):
+    user = request.user
+    if user.is_admin:
+        return render(request, 'accounts/admin-account.html')
+    elif user.is_manager:
+        return render(request, 'accounts/manager-account.html')
+    else:
+        return render(request, 'accounts/user-account.html')
+
+
+def send_ticket(request):
     pass

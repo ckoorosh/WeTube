@@ -8,7 +8,8 @@ urlpatterns = [
     path('login/', views.signin, name='login'),
     path('signup/', views.signup, name='signup'),
     path('logout/', views.logout_user, name='logout'),
-    path('account/', views.show_account, name='account'),
+    path('profile/', views.show_account, name='account'),
+    path('ticket/', views.send_ticket, name='ticket'),
 ]
 
 if settings.DEBUG:

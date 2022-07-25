@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>WeTube</title>
+    <link href="{% static 'account.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
@@ -39,12 +40,8 @@
 
 </div>
 <div class="main">
-    <section>
-        <div>
-            <h1 class="home-title">Popular on WeTube</h1>
-
-        </div>
-    </section>
+    {% block content %}
+    {% endblock %}
 </div>
 <footer>
     <p>&copy 2022 WeTube, Inc.</p>

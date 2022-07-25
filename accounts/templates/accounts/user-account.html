@@ -1,0 +1,147 @@
+{% extends 'accounts/account.html' %}
+{% block content %}
+<div>
+    <section class="tickets">
+        <div>
+            <h1 class="home-title">General Info</h1>
+            <hr class="sep">
+            <span class="video-title">Username</span>
+            <div class="video-details">
+                <div>
+                    <info>{{ user.username }}</info>
+                </div>
+            </div>
+            <span class="video-title">Stroke</span>
+            <div class="video-details">
+                <div>
+                    <info>{{ user.strike }}</info>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h1 class="home-title">Your Videos</h1>
+            <hr class="sep">
+            <div class="box">
+                <a href="">
+                    <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt="">
+                    <div>
+                        <info-title> Title</info-title>
+                    </div>
+                    <div>
+                        <info-author> User <i class="fa fa-check-circle" style="color:#B1B1B1"></i>
+                        </info-author>
+                    </div>
+                    <div>
+                        <info-author> 10K views &#8226; July 24, 2012</info-author>
+                    </div>
+                </a>
+                {% for video in videos%}
+                <a href="{% url 'watch' video.id %}">
+                    <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt="">
+                    <div>
+                        <info-title> {{video.title}}</info-title>
+                    </div>
+                    <div>
+                        <info-author> {{video.user.username}} <i class="fa fa-check-circle" style="color:#B1B1B1"></i>
+                        </info-author>
+                    </div>
+                    <div>
+                        <info-author> {{video.views}} views &#8226; {{ video.date_posted }}</info-author>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section class="tickets">
+        <div>
+            <h1 class="home-title">Tickets</h1>
+            <hr class="sep">
+            <div>
+                <form method="POST" action="{% url 'ticket' %}">
+                    {% csrf_token %}
+                    <div>
+                        <span class="video-title">New Ticket</span>
+                        <div>
+                            <input type="text" class="ticket-title-input" placeholder="Title" name="title"
+                                   required/>
+                        </div>
+                        <div>
+                        <textarea class="ticket-input" placeholder="Write the ticket ..." name="ticket"
+                                  required></textarea>
+                        </div>
+                        <div>
+                            <button class="ticket-button">Send</button>
+                        </div>
+                    </div>
+                </form>
+                <hr class="sep">
+                <div style="margin-top: 25px">
+                    <div class="ticket-title">
+                        <div>
+                            <info><i class="fa fa-ticket fa-2x"></i></info>
+                        </div>
+                        <div>
+                            <info>My account is suspended</info>
+                        </div>
+                    </div>
+                    <div class="ticket-message">
+                        <div style="margin-left: 67px;">
+                            <span>
+                                I need my account un-stroke PLZ...
+                            </span>
+                        </div>
+                        <h1> Status </h1>
+                        <div style="margin-left: 67px;">
+                            <span>
+                                New
+                            </span>
+                        </div>
+                        <h1> Response </h1>
+                        <div style="margin-left: 67px;">
+                            <span>
+                                Not acceptable!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="ticket">
+                {% for ticket in tickets %}
+                <div style="margin-top: 25px">
+                    <div class="ticket-title">
+                        <div>
+                            <info><i class="fa fa-user-circle fa-2x"></i></info>
+                        </div>
+                        <div>
+                            <info>{{ ticket.title }} ({{ ticket.date_posted }})</info>
+                        </div>
+                    </div>
+                    <div class="ticket-message">
+                        <div style="margin-left: 67px;">
+                        <span>
+                            {{ ticket.body }}
+                        </span>
+                        </div>
+                    </div>
+                    <h1> Status </h1>
+                    <div style="margin-left: 67px;">
+                        <span>
+                            {{ ticket.status }}
+                        </span>
+                    </div>
+                    {% if ticket.response %}
+                    <h1> Response </h1>
+                    <div style="margin-left: 67px;">
+                        <span>
+                            {{ ticket.response.body }}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+                <hr class="ticket">
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}
