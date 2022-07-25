@@ -4,21 +4,6 @@ from .models import Video, Comment
 from .forms import UploadForm
 
 
-def home(request):
-    context = {
-        'videos': Video.objects.all()
-    }
-    return render(request, 'videos/home.html', context)
-
-
-def login(request):
-    return render(request, 'videos/login.html')
-
-
-def signup(request):
-    return render(request, 'videos/signup.html')
-
-
 class UploadView(CreateView):
     model = Video
     success_url = "/"

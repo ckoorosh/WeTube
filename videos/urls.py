@@ -5,11 +5,8 @@ from . import views
 from .views import UploadView
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('login', views.login, name='login'),
-    path('signup', views.signup, name='signup'),
-    path('search', views.search, name='search'),
-    path('upload', UploadView.as_view(), name='upload'),
+    path('search/', views.search, name='search'),
+    path('upload/', UploadView.as_view(), name='upload'),
     path('comment/<int:pk>/', views.send_comment, name='comment'),
     path('like/<int:pk>/', views.like, name='like'),
     path('dislike/<int:pk>/', views.dislike, name='dislike'),
