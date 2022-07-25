@@ -2,65 +2,68 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>WeTube</title>
-	<link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <meta charset="utf-8">
+    <title>WeTube</title>
+    <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 
 <body style="background-color:#181818;">
-    <div class="navbar">
-        <div>
-            <a href="#" class="fa fa-bars fa-2x" style="color:white"></a>
-		    <a href="{% url 'home' %}"><img src="{% static 'images/WeTube-Logo.png' %}" alt="WeTube" class="logo"/></a>
-        </div>
-        <form method="POST" action="{% url 'search' %}">
-            {% csrf_token %}
-            <div>
-                <b><input type="search" placeholder="{{ query }}" class="search" name="title" required></b>
-                <c><button class="search-button"><i class="fa fa-search"></i></button></c>
-            </div>
-        </form>
-        <div>
-            <account>
-                {% if user.is_authenticated %}
-                <a href="{% url 'login' %}" class="fa fa-round fa-user"></a>
-                {% else %}
-                <!-- TODO: Should be ACCOUNT PAGE -->
-                <a href="{% url 'signup' %}" class="fa fa-round fa-user"></a>
-                {% endif %}
-            </account>
-            <upload>
-                <a href="{% url 'upload' %}" class="fa fa-round fa-upload"></a>
-            </upload>
-        </div>
-        
-	</div>
-    <div class="main">
-        <section>
-          <div>
-              <h1 class="home-title">Results on WeTube</h1>
-              <div class="box">
-                  {% for video in videos%}
-                      <a href="{% url 'watch' video.id %}">
-                          <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt="">
-                          <div>
-                              <info-title> {{video.title}} </info-title>
-                          </div>
-                          <div>
-                              <info-author> {{video.user.username}} <i class="fa fa-check-circle" style="color:#B1B1B1"></i> </info-author>
-                          </div>
-                          <div>
-                              <info-author> {{video.views}} views &#8226; {{ video.date_posted }} </info-author>
-                          </div>
-                      </a>
-                  {% endfor %}
-              </div>
-          </div>
-        </section>
+<div class="navbar">
+    <div>
+        <a href="#" class="fa fa-bars fa-2x" style="color:white"></a>
+        <a href="{% url 'home' %}"><img src="{% static 'images/WeTube-Logo.png' %}" alt="WeTube" class="logo"/></a>
     </div>
-    <footer>
-            <p>&copy 2022 WeTube, Inc.</p>
-    </footer>
+    <form method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
+        <div>
+            <b><input type="search" placeholder="{{ query }}" class="search" name="title" required></b>
+            <c>
+                <button class="search-button"><i class="fa fa-search"></i></button>
+            </c>
+        </div>
+    </form>
+    <div>
+        <account>
+            {% if user.is_authenticated %}
+            <a style="color: white; font-family: Roboto" href="{% url 'logout' %}"> Logout {{ user.username }} </a>
+            <a href="{% url 'account' %}" class="fa fa-round fa-user"></a>
+            {% else %}
+            <a href="{% url 'login' %}" class="fa fa-round fa-user"></a>
+            {% endif %}
+        </account>
+        <upload>
+            <a href="{% url 'upload' %}" class="fa fa-round fa-upload"></a>
+        </upload>
+    </div>
+
+</div>
+<div class="main">
+    <section>
+        <div>
+            <h1 class="home-title">Results on WeTube</h1>
+            <div class="box">
+                {% for video in videos%}
+                <a href="{% url 'watch' video.id %}">
+                    <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt="">
+                    <div>
+                        <info-title> {{video.title}}</info-title>
+                    </div>
+                    <div>
+                        <info-author> {{video.user.username}} <i class="fa fa-check-circle" style="color:#B1B1B1"></i>
+                        </info-author>
+                    </div>
+                    <div>
+                        <info-author> {{video.views}} views &#8226; {{ video.date_posted }}</info-author>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+<footer>
+    <p>&copy 2022 WeTube, Inc.</p>
+</footer>
 </body>
 </html>

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView
 from .models import User
@@ -51,6 +51,10 @@ def signup(request):
     return render(request, 'accounts/signup.html')
 
 
-def logout(request):
+def logout_user(request):
     logout(request)
     return redirect('home')
+
+
+def show_account(request):
+    pass
