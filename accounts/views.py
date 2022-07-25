@@ -1,12 +1,56 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, CreateView
+from .models import User
+from .forms import SignupForm
 
 
-# Create your views here.
+def signin(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        print(username)
+        print(password)
+        user = User.objects.get(username=username)
+        print(user.password)
+        print(user.check_password(password))
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        if user:
+            login(request, user)
+            return redirect('home')
 
-
-def login(request):
     return render(request, 'accounts/login.html')
 
 
 def signup(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = User(username=username)
+        user.set_password(password)
+        user.save()
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect('home')
+
+    #     form = SignupForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         username = form.cleaned_data.get('username')
+    #         raw_password = form.cleaned_data.get('password')
+    #         user = authenticate(username=username, password=raw_password)
+    #         print(raw_password)
+    #         print(user)
+    #         login(request, user)
+    #         return redirect('home')
+    # else:
+    #     form = SignupForm()
+
     return render(request, 'accounts/signup.html')
+
+
+def logout(request):
+    logout(request)
+    return redirect('home')

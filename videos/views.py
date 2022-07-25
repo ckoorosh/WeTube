@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, CreateView
 from .models import Video, Comment
@@ -38,6 +39,7 @@ def send_comment(request, pk):
     return redirect(request.META['HTTP_REFERER'])
 
 
+@login_required(redirect_field_name='login')
 def like(request, pk):
     video = Video.objects.get(pk=pk)
     if video:
@@ -88,4 +90,4 @@ def watch(request, pk):
         }
         return render(request, 'videos/watch.html', context=context)
     else:
-        return home(request)
+        return redirect('home')
