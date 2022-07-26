@@ -4,7 +4,13 @@ from videos.models import Video
 
 
 def home(request):
-    videos = Video.objects.all()
+    if request.user.is_authenticated:
+        if request.user.is_admin or request.user.is_manager:
+            videos = Video.objects.all()
+        else:
+            videos = Video.objects.filter(banned=False)
+    else:
+        videos = Video.objects.filter(banned=False)
     trending = videos.order_by('-views')[:3]
     context = {
         'videos': videos,

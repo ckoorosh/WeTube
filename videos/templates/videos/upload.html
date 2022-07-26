@@ -61,17 +61,29 @@
                 <div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="upload100-form-bgbtn"></div>
-                        <button class="login100-form-btn">
-                            Upload!
-                        </button>
+                        {% if not user.strike %}
+                            <button class="login100-form-btn">
+                                Upload!
+                            </button>
+                        {% endif %}
                     </div>
                 </div>
             </form>
 
-            <div class="text-center p-t-115">
-						<span class="txt1">
-							Don’t have any video yet?
-						</span>
+            {% if user.strike %}
+            <div class="text-center">
+                <span class="txt1" style="color: red">
+                    You are have been struck!
+                    You cannot upload videos anymore.
+                </span>
+            </div>
+            {% endif %}
+
+            <div class="text-center p-t-50">
+
+                <span class="txt1">
+                    Don’t have any video yet?
+                </span>
 
                 <a class="txt2" href="{% url 'home' %}">
                     Go Back

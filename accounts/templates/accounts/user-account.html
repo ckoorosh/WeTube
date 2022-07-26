@@ -11,10 +11,14 @@
                     <info>{{ user.username }}</info>
                 </div>
             </div>
-            <span class="video-title">Stroke</span>
+            <span class="video-title">Struck</span>
             <div class="video-details">
                 <div>
-                    <info>{{ user.strike }}</info>
+                    {% if not user.strike %}
+                    <info>No</info>
+                    {% else %}
+                    <info>Yes</info>
+                    {% endif %}
                 </div>
             </div>
         </div>

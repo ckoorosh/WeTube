@@ -11,7 +11,7 @@ urlpatterns = [
     path('comment/<int:pk>/', views.send_comment, name='comment'),
     path('like/<int:pk>/', views.like, name='like'),
     path('dislike/<int:pk>/', views.dislike, name='dislike'),
-    path('tag/<int:pk>/', views.add_tag, name='tag'),
+    path('tag/<int:pk>/<str:tag>/', views.add_tag, name='tag'),
     path('ban/<int:pk>/', views.ban, name='ban'),
     path('watch/<int:pk>/', views.watch, name='watch')
 ]

@@ -5,6 +5,30 @@ from django.utils import timezone
 from accounts.models import User
 
 
+class Tag(models.Model):
+    violence = models.BooleanField(default=False)
+    blood = models.BooleanField(default=False)
+    drug = models.BooleanField(default=False)
+
+    @classmethod
+    def get_default_pk(cls):
+        tag, created = cls.objects.get_or_create()
+        return tag.pk
+
+    def set_tag(self, tag):
+        if tag == 'v':
+            self.violence = not self.violence
+        elif tag == 'b':
+            self.blood = not self.blood
+        elif tag == 'd':
+            self.drug = not self.drug
+
+        self.save()
+
+    def __str__(self):
+        return f'v:{self.violence}-b:{self.blood}-d:{self.drug}'
+
+
 class Video(models.Model):
     file = models.FileField(default='', upload_to='')
     title = models.CharField(max_length=1000)
@@ -17,12 +41,17 @@ class Video(models.Model):
     dislikes = models.ManyToManyField(User, related_name='dislikes')
     dislikes_count = models.IntegerField(default=0)
     banned = models.BooleanField(default=False)  # To see if the video is banned or not
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
 
     def ban(self):
         self.banned = True
+        self.save()
+
+    def un_ban(self):
+        self.banned = False
         self.save()
 
     def get_url(self):
@@ -37,14 +66,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.user}-{self.video}-{self.date_posted}'
-
-
-class Tag(models.Model):
-    title = models.CharField(max_length=30, default='')
-    videos = models.ManyToManyField(Video)
-
-    def __str__(self):
-        return self.title
 
 
 class TicketResponse(models.Model):

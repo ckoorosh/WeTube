@@ -1,7 +1,7 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, CreateView
-from .models import Video, Comment
+from .models import Video, Comment, Tag
 from .forms import UploadForm
 
 
@@ -12,9 +12,19 @@ class UploadView(CreateView):
     fields = ['title', 'description', 'file']
 
     # form_class = UploadForm
+    #
+    # def not_admin(self):
+    #     return not self.request.user.is_admin
+    #
+    # @user_passes_test(not_admin)
+    # def dispatch(self, request, *args, **kwargs):
+    #     return super(UploadView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        tag = Tag()
+        tag.save()
+        form.instance.tag = tag
         return super().form_valid(form)
 
 
@@ -80,11 +90,11 @@ def dislike(request, pk):
     return redirect(request.META['HTTP_REFERER'])
 
 
-def add_tag(request, pk):
+def add_tag(request, pk, tag):
     if request.user.is_admin:
         video = Video.objects.get(pk=pk)
         if video:
-            pass
+            video.tag.set_tag(tag)
 
     return redirect(request.META['HTTP_REFERER'])
 
@@ -93,7 +103,21 @@ def ban(request, pk):
     if request.user.is_admin:
         video = Video.objects.get(pk=pk)
         if video:
-            pass
+            if video.banned:
+                video.un_ban()
+            else:
+                video.ban()
+                user = video.user
+                user_videos = user.video_set.all()
+                video_index = list(user_videos.values_list('id', flat=True)).index(video.id)
+                if video_index > 0:
+                    previous_video = user_videos[video_index - 1]
+                    if previous_video.banned:
+                        user.set_strike(True)
+                if video_index < len(user_videos) - 1:
+                    next_video = user_videos[video_index + 1]
+                    if next_video.banned:
+                        user.set_strike(True)
 
     return redirect(request.META['HTTP_REFERER'])
 

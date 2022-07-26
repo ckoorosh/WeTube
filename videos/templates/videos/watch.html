@@ -45,6 +45,50 @@
         <source src="{{ video.file.url }}" type="video/mp4">
     </video>
     <div>
+        <div class="video-details" style="margin-top: 20px; font-size: 1.0rem; color: #6a7dfe;">
+        {% if user.is_authenticated and user.is_admin %}
+            <action>
+                {% if video.tag.violence %}
+                <i class="fa fa-button fa-minus"></i>
+                {% else %}
+                <i class="fa fa-button fa-plus"></i>
+                {% endif %}
+                <a style="text-decoration: none; color: #6a7dfe;" href="{% url 'tag' video.id 'v' %}">Violence</a>
+            </action>
+            <action>
+                {% if video.tag.blood %}
+                <i class="fa fa-button fa-minus"></i>
+                {% else %}
+                <i class="fa fa-button fa-plus"></i>
+                {% endif %}
+                <a style="text-decoration: none; color: #6a7dfe;" href="{% url 'tag' video.id 'b' %}">Blood</a>
+            </action>
+            <action>
+                {% if video.tag.drug %}
+                <i class="fa fa-button fa-minus"></i>
+                {% else %}
+                <i class="fa fa-button fa-plus"></i>
+                {% endif %}
+                <a style="text-decoration: none; color: #6a7dfe;" href="{% url 'tag' video.id 'd' %}">Drug</a>
+            </action>
+        {% else %}
+            {% if video.tag.violence %}
+            <action>
+                <a style="text-decoration: none; color: #6a7dfe;" href=""># Violence</a>
+            </action>
+            {% endif %}
+            {% if video.tag.blood %}
+            <action>
+                <a style="text-decoration: none; color: #6a7dfe;" href=""># Blood</a>
+            </action>
+            {% endif %}
+            {% if video.tag.drug %}
+            <action>
+                <a style="text-decoration: none; color: #6a7dfe;" href=""># Drug</a>
+            </action>
+            {% endif %}
+        {% endif %}
+        </div>
         <h1 class="video-title">{{ video.title }}</h1>
     </div>
     <div class="video-details">
@@ -94,7 +138,11 @@
             {% if user.is_admin %}
             <action>
                 <i class="fa fa-button fa-ban"></i>
-                <a style="text-decoration: none; color: white;" href="{% url 'like' video.id %}">{{ video.likes_count }}</a>
+                {% if video.banned %}
+                <a style="text-decoration: none; color: white;" href="{% url 'ban' video.id %}">BANNED</a>
+                {% else %}
+                <a style="text-decoration: none; color: white;" href="{% url 'ban' video.id %}">BAN</a>
+                {% endif %}
             </action>
             {% endif %}
         </div>
