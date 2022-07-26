@@ -1,5 +1,7 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
+from django.core.files.storage import default_storage
 
 from accounts.models import User
 
@@ -23,6 +25,9 @@ class Video(models.Model):
     def ban(self):
         self.banned = True
         self.save()
+
+    def get_url(self):
+        return default_storage.exists(self.file.path)
 
 
 class Comment(models.Model):
