@@ -34,7 +34,11 @@
             {% endif %}
         </account>
         <upload>
+            {% if user.is_admin %}
+            <a href="{% url 'admin-upload' %}" class="fa fa-round fa-upload"></a>
+            {% else %}
             <a href="{% url 'upload' %}" class="fa fa-round fa-upload"></a>
+            {% endif %}
         </upload>
     </div>
 

@@ -1,7 +1,6 @@
-from django.db import models
-from django.urls import reverse
-from django.utils import timezone
 from django.core.files.storage import default_storage
+from django.db import models
+from django.utils import timezone
 
 from accounts.models import User
 
@@ -36,9 +35,16 @@ class Comment(models.Model):
     video = models.ForeignKey(Video, on_delete=models.CASCADE)
     date_posted = models.DateTimeField(default=timezone.now)
 
+    def __str__(self):
+        return f'{self.user}-{self.video}-{self.date_posted}'
+
 
 class Tag(models.Model):
+    title = models.CharField(max_length=30, default='')
     videos = models.ManyToManyField(Video)
+
+    def __str__(self):
+        return self.title
 
 
 class TicketResponse(models.Model):
@@ -60,3 +66,6 @@ class Ticket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=30, choices=TICKET_STATUS, default="n")
     response = models.ForeignKey(TicketResponse, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.user}-{self.title}'

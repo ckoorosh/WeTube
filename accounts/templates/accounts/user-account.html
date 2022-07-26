@@ -63,7 +63,6 @@
                     </div>
                 </form>
                 <hr class="sep">
-                <hr class="ticket">
                 {% for ticket in tickets %}
                 <div style="margin-top: 25px">
                     <div class="ticket-title">
@@ -76,18 +75,16 @@
                     </div>
                     <div class="ticket-message">
                         <div style="margin-left: 67px;">
-                            <span>
-                                {{ ticket.body }}
-                            </span>
+                            <pre class="ticket-message">{{ ticket.body }}</pre>
                         </div>
-                        <h1> Status </h1>
+                        <span class="video-title" style="margin-top: 10px;">Status</span>
                         <div class="video-details">
                             <div>
                                 <info> {{ ticket.get_status_display }}</info>
                             </div>
                         </div>
                         {% if ticket.response %}
-                        <h1> Response </h1>
+                        <span class="video-title">Response</span>
                         <div class="video-details">
                             <div>
                                 <info> {{ ticket.response.body }}</info>
