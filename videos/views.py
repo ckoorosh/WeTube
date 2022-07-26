@@ -18,10 +18,6 @@ class UploadView(CreateView):
         return super().form_valid(form)
 
 
-def admin_upload(request):
-    return render(request, 'videos/admin-upload.html')
-
-
 def search(request):
     if request.method == "POST":
         query = request.POST.get('title', None)
@@ -32,6 +28,7 @@ def search(request):
     return render(request, 'videos/home.html')
 
 
+@login_required(redirect_field_name='login')
 def send_comment(request, pk):
     if request.method == "POST":
         query = request.POST.get('comment', None)
@@ -63,6 +60,7 @@ def like(request, pk):
     return redirect(request.META['HTTP_REFERER'])
 
 
+@login_required(redirect_field_name='login')
 def dislike(request, pk):
     video = Video.objects.get(pk=pk)
     if video:
@@ -83,6 +81,15 @@ def dislike(request, pk):
 
 
 def add_tag(request, pk):
+    if request.user.is_admin:
+        video = Video.objects.get(pk=pk)
+        if video:
+            pass
+
+    return redirect(request.META['HTTP_REFERER'])
+
+
+def ban(request, pk):
     if request.user.is_admin:
         video = Video.objects.get(pk=pk)
         if video:

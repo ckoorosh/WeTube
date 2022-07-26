@@ -23,3 +23,6 @@ urlpatterns = [
     path('videos/', include('videos.urls')),
     path('accounts/', include('accounts.urls'))
 ]
+
+handler404 = 'home.views.not_found_view'
+handler500 = 'home.views.error_view'

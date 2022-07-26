@@ -33,9 +33,7 @@
             {% endif %}
         </account>
         <upload>
-            {% if user.is_admin %}
-            <a href="{% url 'admin-upload' %}" class="fa fa-round fa-upload"></a>
-            {% else %}
+            {% if not user.is_admin %}
             <a href="{% url 'upload' %}" class="fa fa-round fa-upload"></a>
             {% endif %}
         </upload>
@@ -96,7 +94,7 @@
             {% if user.is_admin %}
             <action>
                 <i class="fa fa-button fa-ban"></i>
-                <a>BAN</a>
+                <a style="text-decoration: none; color: white;" href="{% url 'like' video.id %}">{{ video.likes_count }}</a>
             </action>
             {% endif %}
         </div>

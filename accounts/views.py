@@ -1,4 +1,5 @@
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from .models import User
@@ -34,11 +35,13 @@ def signup(request):
     return render(request, 'accounts/signup.html')
 
 
+@login_required(redirect_field_name='login')
 def logout_user(request):
     logout(request)
     return redirect('home')
 
 
+@login_required(redirect_field_name='login')
 def show_account(request):
     user = request.user
     if user.is_admin:
@@ -55,6 +58,7 @@ def show_account(request):
         return render(request, 'accounts/user-account.html', context=context)
 
 
+@login_required(redirect_field_name='login')
 def send_ticket(request):
     if request.method == "POST":
         title = request.POST.get('title', None)

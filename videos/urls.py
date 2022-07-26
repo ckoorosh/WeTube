@@ -8,11 +8,11 @@ from .views import UploadView
 urlpatterns = [
     path('search/', views.search, name='search'),
     path('upload/', login_required(UploadView.as_view()), name='upload'),
-    path('admin-upload/', views.admin_upload, name='admin-upload'),
     path('comment/<int:pk>/', views.send_comment, name='comment'),
     path('like/<int:pk>/', views.like, name='like'),
     path('dislike/<int:pk>/', views.dislike, name='dislike'),
     path('tag/<int:pk>/', views.add_tag, name='tag'),
+    path('ban/<int:pk>/', views.ban, name='ban'),
     path('watch/<int:pk>/', views.watch, name='watch')
 ]
 
