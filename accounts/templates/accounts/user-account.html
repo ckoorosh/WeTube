@@ -22,32 +22,6 @@
             <h1 class="home-title">Your Videos</h1>
             <hr class="sep">
             <div class="box" style="grid-template-columns: repeat(1, minmax(100px, auto));">
-                <a href="">
-                    <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt="">
-                    <div>
-                        <info-title> Title</info-title>
-                    </div>
-                    <div>
-                        <info-author> User <i class="fa fa-check-circle" style="color:#B1B1B1"></i>
-                        </info-author>
-                    </div>
-                    <div>
-                        <info-author> 10K views &#8226; July 24, 2012</info-author>
-                    </div>
-                </a>
-                <a href="">
-                    <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt="">
-                    <div>
-                        <info-title> Title</info-title>
-                    </div>
-                    <div>
-                        <info-author> User <i class="fa fa-check-circle" style="color:#B1B1B1"></i>
-                        </info-author>
-                    </div>
-                    <div>
-                        <info-author> 10K views &#8226; July 24, 2012</info-author>
-                    </div>
-                </a>
                 {% for video in videos%}
                 <a href="{% url 'watch' video.id %}">
                     <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt="">
@@ -80,7 +54,7 @@
                                    required/>
                         </div>
                         <div>
-                        <textarea class="ticket-input" placeholder="Write the ticket ..." name="ticket"
+                        <textarea class="ticket-input" placeholder="Write the ticket ..." name="body"
                                   required></textarea>
                         </div>
                         <div>
@@ -89,41 +63,12 @@
                     </div>
                 </form>
                 <hr class="sep">
-                <div style="margin-top: 25px">
-                    <div class="ticket-title">
-                        <div>
-                            <info><i class="fa fa-ticket fa-2x"></i></info>
-                        </div>
-                        <div>
-                            <info>My account is suspended</info>
-                        </div>
-                    </div>
-                    <div class="ticket-message">
-                        <div style="margin-left: 67px;">
-                            <span>
-                                I need my account un-stroke PLZ...
-                            </span>
-                        </div>
-                        <h1> Status </h1>
-                        <div style="margin-left: 67px;">
-                            <span>
-                                New
-                            </span>
-                        </div>
-                        <h1> Response </h1>
-                        <div style="margin-left: 67px;">
-                            <span>
-                                Not acceptable!
-                            </span>
-                        </div>
-                    </div>
-                </div>
                 <hr class="ticket">
                 {% for ticket in tickets %}
                 <div style="margin-top: 25px">
                     <div class="ticket-title">
                         <div>
-                            <info><i class="fa fa-user-circle fa-2x"></i></info>
+                            <info><i class="fa fa-ticket fa-2x"></i></info>
                         </div>
                         <div>
                             <info>{{ ticket.title }} ({{ ticket.date_posted }})</info>
@@ -131,25 +76,25 @@
                     </div>
                     <div class="ticket-message">
                         <div style="margin-left: 67px;">
-                        <span>
-                            {{ ticket.body }}
-                        </span>
+                            <span>
+                                {{ ticket.body }}
+                            </span>
                         </div>
+                        <h1> Status </h1>
+                        <div class="video-details">
+                            <div>
+                                <info> {{ ticket.get_status_display }}</info>
+                            </div>
+                        </div>
+                        {% if ticket.response %}
+                        <h1> Response </h1>
+                        <div class="video-details">
+                            <div>
+                                <info> {{ ticket.response.body }}</info>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
-                    <h1> Status </h1>
-                    <div style="margin-left: 67px;">
-                        <span>
-                            {{ ticket.status }}
-                        </span>
-                    </div>
-                    {% if ticket.response %}
-                    <h1> Response </h1>
-                    <div style="margin-left: 67px;">
-                        <span>
-                            {{ ticket.response.body }}
-                        </span>
-                    </div>
-                    {% endif %}
                 </div>
                 <hr class="ticket">
                 {% endfor %}

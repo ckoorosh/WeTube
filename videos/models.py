@@ -59,4 +59,4 @@ class Ticket(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=30, choices=TICKET_STATUS, default="n")
-    response = models.ForeignKey(TicketResponse, on_delete=models.CASCADE, default=None)
+    response = models.ForeignKey(TicketResponse, on_delete=models.CASCADE, blank=True, null=True)

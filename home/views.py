@@ -1,4 +1,3 @@
-from django.db.models import Max
 from django.shortcuts import render
 
 from videos.models import Video
