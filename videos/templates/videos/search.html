@@ -47,7 +47,10 @@
             <div class="box">
                 {% for video in videos%}
                 <a href="{% url 'watch' video.id %}">
-                    <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt="">
+                    <video class="video-mask" preload="metadata" width="320" height="240">
+                        <source src="{{ video.file.url }}#t=0.5" type="video/mp4">
+                    </video>
+<!--                    <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt="">-->
                     <div>
                         <info-title> {{video.title}}</info-title>
                     </div>
