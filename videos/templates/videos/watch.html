@@ -122,8 +122,7 @@
                 <i class="fa fa-button fa-heart-crack"></i>
                 {% if video.dislikes_count %}
                 {% if user.is_authenticated %}
-                <a style="text-decoration: none; color: white;" href="{% url 'dislike' video.id %}">{{
-                    video.dislikes_count }}</a>
+                <a style="text-decoration: none; color: white;" href="{% url 'dislike' video.id %}">{{ video.dislikes_count }}</a>
                 {% else %}
                 <a style="text-decoration: none; color: white;" href="{% url 'login' %}">{{ video.dislikes_count }}</a>
                 {% endif %}

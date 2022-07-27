@@ -1,6 +1,29 @@
 {% extends 'accounts/account.html' %}
 {% block content %}
 <div>
+    <section>
+        <div>
+            <h1 class="home-title">Struck Users</h1>
+            <hr class="sep">
+            <div>
+                {% for s_user in struck_users %}
+                <div style="margin-top: 25px">
+                    <div class="ticket-title">
+                        <div>
+                            <info><i class="fa fa-user fa-2x"></i></info>
+                        </div>
+                        <div>
+                            <info>{{ s_user.username }}</info>
+                            <a style="color: white;" href="{% url 'unstrike' s_user.id %}">Remove Strike</a>
+                        </div>
+                    </div>
+                </div>
+                <hr class="ticket">
+                {% endfor %}
+            </div>
+            <hr class="sep">
+        </div>
+    </section>
     <section class="tickets">
         <div>
             <h1 class="home-title">User Tickets</h1>

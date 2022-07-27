@@ -108,3 +108,12 @@ def change_ticket_status(request, pk):
                     ticket.set_status(status)
 
     return redirect(request.META['HTTP_REFERER'])
+
+
+def unstrike(request, pk):
+    if request.user.is_admin:
+        user = User.objects.get(pk=pk)
+        if user:
+            user.set_strike(False)
+
+    return redirect(request.META['HTTP_REFERER'])
