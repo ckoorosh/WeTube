@@ -57,8 +57,10 @@ def show_account(request):
         return render(request, 'accounts/admin-account.html', context=context)
     elif user.is_manager:
         admin_tickets = Ticket.objects.filter(user__is_admin=True)
+        unverified_admins = User.objects.filter(is_admin=True, is_verified=False)
         context = {
-            'admin_tickets': admin_tickets
+            'admin_tickets': admin_tickets,
+            'unverified_admins': unverified_admins,
         }
         return render(request, 'accounts/manager-account.html', context=context)
     else:
@@ -85,7 +87,7 @@ def send_ticket(request):
 
 def respond_ticket(request, pk):
     if request.method == "POST":
-        if request.user.is_admin:
+        if request.user.is_admin or request.user.is_manager:
             ticket = Ticket.objects.get(pk=pk)
             if ticket:
                 body = request.POST.get('body', None)
@@ -100,7 +102,7 @@ def respond_ticket(request, pk):
 
 def change_ticket_status(request, pk):
     if request.method == "POST":
-        if request.user.is_admin:
+        if request.user.is_admin or request.user.is_manager:
             ticket = Ticket.objects.get(pk=pk)
             if ticket:
                 if ticket.status != 'c':
@@ -115,5 +117,14 @@ def unstrike(request, pk):
         user = User.objects.get(pk=pk)
         if user:
             user.set_strike(False)
+
+    return redirect(request.META['HTTP_REFERER'])
+
+
+def verify(request, pk):
+    if request.user.is_manager:
+        user = User.objects.get(pk=pk)
+        if user and user.is_admin:
+            user.verify()
 
     return redirect(request.META['HTTP_REFERER'])

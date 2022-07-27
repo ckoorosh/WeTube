@@ -15,3 +15,7 @@ class User(AbstractUser):
     def set_strike(self, strike_status):
         self.strike = strike_status
         self.save()
+
+    def verify(self):
+        self.is_verified = True
+        self.save()

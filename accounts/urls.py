@@ -13,6 +13,7 @@ urlpatterns = [
     path('ticket/respond/<int:pk>/', views.respond_ticket, name='respond-ticket'),
     path('ticket/edit/<int:pk>/', views.change_ticket_status, name='change-ticket-status'),
     path('unstrike/<int:pk>/', views.unstrike, name='unstrike'),
+    path('verify/<int:pk>/', views.verify, name='verify'),
 ]
 
 if settings.DEBUG:
