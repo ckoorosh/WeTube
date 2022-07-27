@@ -10,6 +10,8 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('profile/', views.show_account, name='account'),
     path('ticket/', views.send_ticket, name='ticket'),
+    path('ticket/respond/<int:pk>/', views.respond_ticket, name='respond-ticket'),
+    path('ticket/edit/<int:pk>/', views.change_ticket_status, name='change-ticket-status'),
 ]
 
 if settings.DEBUG:

@@ -3,63 +3,123 @@
 <div>
     <section class="tickets">
         <div>
-            <h1 class="home-title">General Info</h1>
+            <h1 class="home-title">User Tickets</h1>
             <hr class="sep">
-            <span class="video-title">Username</span>
-            <div class="video-details">
-                <div>
-                    <info>{{ user.username }}</info>
+            <div>
+                {% for ticket in user_tickets %}
+                <div style="margin-top: 25px">
+                    <div class="ticket-title">
+                        <div>
+                            <info><i class="fa fa-ticket fa-2x"></i></info>
+                        </div>
+                        <div>
+                            <info>{{ ticket.user.username }} - {{ ticket.title }} ({{ ticket.date_posted }})</info>
+                        </div>
+                    </div>
+                    <div class="ticket-message">
+                        <div style="margin-left: 67px;">
+                            <pre class="ticket-message">{{ ticket.body }}</pre>
+                        </div>
+                        <span class="video-title" style="margin-top: 10px;">Status</span>
+                        <div class="video-details">
+                            <div style="margin-bottom: 10px; margin-top: 10px;">
+                                <div class="video-details">
+                                        <div>
+                                            <info> {{ ticket.get_status_display }}</info>
+                                        </div>
+                                </div>
+                                {% if ticket.status != 'c' %}
+                                <form method="POST" action="{% url 'change-ticket-status' ticket.id %}">
+                                    {% csrf_token %}
+                                    <label>
+                                        {% if ticket.status == 'n' %}
+                                        <input type="radio" name="status" value="n" checked>
+                                        {% else %}
+                                        <input type="radio" name="status" value="n">
+                                        {% endif %}
+                                    </label><span style="color: hsla(0, 0%, 100%, 0.50);">New</span>
+                                    <label>
+                                        {% if ticket.status == 'w' %}
+                                        <input type="radio" name="status" value="w" checked>
+                                        {% else %}
+                                        <input type="radio" name="status" value="w">
+                                        {% endif %}
+                                    </label><span style="color: hsla(0, 0%, 100%, 0.50);">Waiting</span>
+                                    <label>
+                                        {% if ticket.status == 's' %}
+                                        <input type="radio" name="status" value="s" checked>
+                                        {% else %}
+                                        <input type="radio" name="status" value="s">
+                                        {% endif %}
+                                    </label><span style="color: hsla(0, 0%, 100%, 0.50);">Solved</span>
+                                    <label>
+                                        {% if ticket.status == 'c' %}
+                                        <input type="radio" name="status" value="c" checked>
+                                        {% else %}
+                                        <input type="radio" name="status" value="c">
+                                        {% endif %}
+                                    </label><span style="color: hsla(0, 0%, 100%, 0.50);">Closed</span>
+                                    <button type="submit" class="ticket-button" style="margin-left: 20px">Change</a>
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if ticket.response %}
+                        <span class="video-title">Response</span>
+                        <div class="video-details">
+                            <div>
+                                <info> {{ ticket.response.body }}</info>
+                            </div>
+                        </div>
+                        {% else %}
+                            {% if ticket.status != 'c' %}
+                            <form method="POST" action="{% url 'respond-ticket' ticket.id %}">
+                                {% csrf_token %}
+                                <div>
+                                    <span class="video-title">Respond</span>
+                                    <div>
+                                        <textarea style="margin-top: 15px;" class="ticket-input" placeholder="Respond ..."
+                                                  name="body"
+                                                  required></textarea>
+                                    </div>
+                                    <div>
+                                        <button class="ticket-button">Send</button>
+                                    </div>
+                                </div>
+                            </form>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-            <span class="video-title">Stroke</span>
-            <div class="video-details">
-                <div>
-                    <info>{{ user.strike }}</info>
-                </div>
-            </div>
-        </div>
-        <div>
-            <h1 class="home-title">Your Videos</h1>
-            <hr class="sep">
-            <div class="box" style="grid-template-columns: repeat(1, minmax(100px, auto));">
-                {% for video in videos%}
-                <a href="{% url 'watch' video.id %}">
-                    <img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt="">
-                    <div>
-                        <info-title> {{video.title}}</info-title>
-                    </div>
-                    <div>
-                        <info-author> {{video.user.username}} <i class="fa fa-check-circle" style="color:#B1B1B1"></i>
-                        </info-author>
-                    </div>
-                    <div>
-                        <info-author> {{video.views}} views &#8226; {{ video.date_posted }}</info-author>
-                    </div>
-                </a>
+                <hr class="ticket">
                 {% endfor %}
             </div>
         </div>
     </section>
     <section class="tickets">
         <div>
-            <h1 class="home-title">Tickets</h1>
+            <h1 class="home-title">Your Tickets</h1>
             <hr class="sep">
             <div>
                 <form method="POST" action="{% url 'ticket' %}">
                     {% csrf_token %}
                     <div>
-                        <span class="video-title">New Ticket</span>
-                        <div>
-                            <input type="text" class="ticket-title-input" placeholder="Title" name="title"
-                                   required/>
-                        </div>
-                        <div>
+                        <fieldset>
+                            <legend class=" video-title"> New Ticket</legend>
+                            <!-- <span class="video-title">New Ticket</span>-->
+                            <div>
+                                <input type="text" class="ticket-title-input" placeholder="Title" name="title"
+                                       required/>
+                            </div>
+                            <div>
                         <textarea class="ticket-input" placeholder="Write the ticket ..." name="body"
                                   required></textarea>
-                        </div>
-                        <div>
-                            <button class="ticket-button">Send</button>
-                        </div>
+                            </div>
+                            <div>
+                                <button class="ticket-button">Send</button>
+                            </div>
+                        </fieldset>
                     </div>
                 </form>
                 <hr class="sep">

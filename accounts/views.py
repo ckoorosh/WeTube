@@ -2,8 +2,9 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from .forms import TicketStatus
 from .models import User
-from videos.models import Ticket
+from videos.models import Ticket, TicketResponse
 
 
 def signin(request):
@@ -45,9 +46,28 @@ def logout_user(request):
 def show_account(request):
     user = request.user
     if user.is_admin:
-        return render(request, 'accounts/admin-account.html')
+        struck_users = User.objects.filter(strike=True)
+        user_tickets = Ticket.objects.filter(user__is_admin=False)
+        tickets = user.ticket_set.all()
+
+        form = TicketStatus(request.POST)
+        # if form.is_valid():
+        #     selected = form.cleaned_data.get("status")
+        #     print(selected)
+
+        context = {
+            'struck_users': struck_users,
+            'user_tickets': user_tickets,
+            'tickets': tickets,
+            'form': form
+        }
+        return render(request, 'accounts/admin-account.html', context=context)
     elif user.is_manager:
-        return render(request, 'accounts/manager-account.html')
+        admin_tickets = Ticket.objects.filter(user__is_admin=True)
+        context = {
+            'admin_tickets': admin_tickets
+        }
+        return render(request, 'accounts/manager-account.html', context=context)
     else:
         videos = user.video_set.all()
         tickets = user.ticket_set.all()
@@ -66,5 +86,32 @@ def send_ticket(request):
         if title:
             ticket = Ticket(title=title, body=body, user=request.user)
             ticket.save()
+
+    return redirect(request.META['HTTP_REFERER'])
+
+
+def respond_ticket(request, pk):
+    if request.method == "POST":
+        if request.user.is_admin:
+            ticket = Ticket.objects.get(pk=pk)
+            if ticket:
+                body = request.POST.get('body', None)
+                if body:
+                    response = TicketResponse(user=request.user, body=body)
+                    response.save()
+                    ticket.response = response
+                    ticket.save()
+
+    return redirect(request.META['HTTP_REFERER'])
+
+
+def change_ticket_status(request, pk):
+    if request.method == "POST":
+        if request.user.is_admin:
+            ticket = Ticket.objects.get(pk=pk)
+            if ticket:
+                if ticket.status != 'c':
+                    status = request.POST.get("status")
+                    ticket.set_status(status)
 
     return redirect(request.META['HTTP_REFERER'])

@@ -52,18 +52,21 @@
                 <form method="POST" action="{% url 'ticket' %}">
                     {% csrf_token %}
                     <div>
-                        <span class="video-title">New Ticket</span>
-                        <div>
-                            <input type="text" class="ticket-title-input" placeholder="Title" name="title"
-                                   required/>
-                        </div>
-                        <div>
+                        <!-- <span class="video-title">New Ticket</span>-->
+                        <fieldset>
+                            <legend class=" video-title">New Ticket</legend>
+                            <div>
+                                <input type="text" class="ticket-title-input" placeholder="Title" name="title"
+                                       required/>
+                            </div>
+                            <div>
                         <textarea class="ticket-input" placeholder="Write the ticket ..." name="body"
                                   required></textarea>
-                        </div>
-                        <div>
-                            <button class="ticket-button">Send</button>
-                        </div>
+                            </div>
+                            <div>
+                                <button class="ticket-button">Send</button>
+                            </div>
+                        </fieldset>
                     </div>
                 </form>
                 <hr class="sep">

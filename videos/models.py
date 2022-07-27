@@ -90,3 +90,7 @@ class Ticket(models.Model):
 
     def __str__(self):
         return f'{self.user}-{self.title}'
+
+    def set_status(self, status):
+        self.status = status
+        self.save()
