@@ -167,15 +167,15 @@
     <form method="POST" action="{% url 'comment' video.id %}">
         {% csrf_token %}
         <div>
-            <div>
-                <h2 class="comments-title">1000 Comments</h2>
-            </div>
-            <div>
-                <textarea class="comment-input" placeholder="Add a comment ..." name="comment" required></textarea>
-            </div>
-            <div>
-                <button class="comment-button">Comment</button>
-            </div>
+            <fieldset>
+                <legend class="comments-title">New Comment</legend>
+                <div>
+                    <textarea class="comment-input" placeholder="Add a comment ..." name="comment" required></textarea>
+                </div>
+                <div>
+                    <button class="comment-button">Comment</button>
+                </div>
+            </fieldset>
         </div>
     </form>
     {% endif %}
