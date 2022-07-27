@@ -2,7 +2,6 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from .forms import TicketStatus
 from .models import User
 from videos.models import Ticket, TicketResponse
 
@@ -50,16 +49,10 @@ def show_account(request):
         user_tickets = Ticket.objects.filter(user__is_admin=False)
         tickets = user.ticket_set.all()
 
-        form = TicketStatus(request.POST)
-        # if form.is_valid():
-        #     selected = form.cleaned_data.get("status")
-        #     print(selected)
-
         context = {
             'struck_users': struck_users,
             'user_tickets': user_tickets,
             'tickets': tickets,
-            'form': form
         }
         return render(request, 'accounts/admin-account.html', context=context)
     elif user.is_manager:
