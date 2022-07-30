@@ -1,0 +1,209 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WeTube</title>
+    <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body style="background-color:#181818;">
+<div class="navbar">
+    <div>
+        <a href="#" class="fa fa-bars fa-2x" style="color:white"></a>
+        <a href="{% url 'home' %}"><img src="{% static 'images/WeTube-Logo.png' %}" alt="WeTube" class="logo"/></a>
+    </div>
+    <form method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
+        <div>
+            <b><input type="search" placeholder="Search" class="search" name="title" required></b>
+            <c>
+                <button class="search-button"><i class="fa fa-search"></i></button>
+            </c>
+        </div>
+    </form>
+    <div>
+        <account>
+            {% if user.is_authenticated %}
+            <a style="color: white; font-family: Roboto" href="{% url 'logout' %}"> Logout <x style="font-weight: bold">{{ user.username }}</x> </a>
+            <a href="{% url 'account' %}" class="fa fa-round fa-user"></a>
+            {% else %}
+            <a href="{% url 'login' %}" class="fa fa-round fa-user"></a>
+            {% endif %}
+        </account>
+        <upload>
+            {% if not user.is_admin %}
+            <a href="{% url 'upload' %}" class="fa fa-round fa-upload"></a>
+            {% endif %}
+        </upload>
+    </div>
+
+</div>
+<div class="main">
+    <video controls class="video">
+        <source src="{{ video.file.url }}" type="video/mp4">
+    </video>
+    <div>
+        <div class="video-details" style="margin-top: 20px; font-size: 1.0rem; color: #6a7dfe;">
+        {% if user.is_authenticated and user.is_admin %}
+            <action>
+                {% if video.tag.violence %}
+                <i class="fa fa-button fa-minus"></i>
+                {% else %}
+                <i class="fa fa-button fa-plus"></i>
+                {% endif %}
+                <a style="text-decoration: none; color: #6a7dfe;" href="{% url 'tag' video.id 'v' %}">Violence</a>
+            </action>
+            <action>
+                {% if video.tag.blood %}
+                <i class="fa fa-button fa-minus"></i>
+                {% else %}
+                <i class="fa fa-button fa-plus"></i>
+                {% endif %}
+                <a style="text-decoration: none; color: #6a7dfe;" href="{% url 'tag' video.id 'b' %}">Blood</a>
+            </action>
+            <action>
+                {% if video.tag.drug %}
+                <i class="fa fa-button fa-minus"></i>
+                {% else %}
+                <i class="fa fa-button fa-plus"></i>
+                {% endif %}
+                <a style="text-decoration: none; color: #6a7dfe;" href="{% url 'tag' video.id 'd' %}">Drug</a>
+            </action>
+        {% else %}
+            {% if video.tag.violence %}
+            <action>
+                <a style="text-decoration: none; color: #6a7dfe;" href=""># Violence</a>
+            </action>
+            {% endif %}
+            {% if video.tag.blood %}
+            <action>
+                <a style="text-decoration: none; color: #6a7dfe;" href=""># Blood</a>
+            </action>
+            {% endif %}
+            {% if video.tag.drug %}
+            <action>
+                <a style="text-decoration: none; color: #6a7dfe;" href=""># Drug</a>
+            </action>
+            {% endif %}
+        {% endif %}
+        </div>
+        <h1 class="video-title">{{ video.title }}</h1>
+    </div>
+    <div class="video-details">
+        <div>
+            <info>{{ video.views }} views</info>
+        </div>
+        <div>
+            <info> |</info>
+        </div>
+        <div>
+            <info>{{ video.date_posted }}</info>
+        </div>
+        <div style="margin-left: 400px">
+            <action>
+                <i class="fa fa-button fa-heart"></i>
+                {% if video.likes_count %}
+                {% if user.is_authenticated %}
+                <a style="text-decoration: none; color: white;" href="{% url 'like' video.id %}">{{ video.likes_count }}</a>
+                {% else %}
+                <a style="text-decoration: none; color: white;" href="{% url 'login' %}">{{ video.likes_count }}</a>
+                {% endif %}
+                {% else %}
+                {% if user.is_authenticated %}
+                <a style="text-decoration: none; color: white;" href="{% url 'like' video.id %}"> LIKE </a>
+                {% else %}
+                <a style="text-decoration: none; color: white;" href="{% url 'login' %}"> LIKE </a>
+                {% endif %}
+                {% endif %}
+            </action>
+            <action>
+                <i class="fa fa-button fa-heart-crack"></i>
+                {% if video.dislikes_count %}
+                {% if user.is_authenticated %}
+                <a style="text-decoration: none; color: white;" href="{% url 'dislike' video.id %}">{{ video.dislikes_count }}</a>
+                {% else %}
+                <a style="text-decoration: none; color: white;" href="{% url 'login' %}">{{ video.dislikes_count }}</a>
+                {% endif %}
+                {% else %}
+                {% if user.is_authenticated %}
+                <a style="text-decoration: none; color: white;" href="{% url 'dislike' video.id %}"> HATE </a>
+                {% else %}
+                <a style="text-decoration: none; color: white;" href="{% url 'login' %}"> HATE </a>
+                {% endif %}
+                {% endif %}
+            </action>
+            {% if user.is_admin %}
+            <action>
+                <i class="fa fa-button fa-ban"></i>
+                {% if video.banned %}
+                <a style="text-decoration: none; color: white;" href="{% url 'ban' video.id %}">BANNED</a>
+                {% else %}
+                <a style="text-decoration: none; color: white;" href="{% url 'ban' video.id %}">BAN</a>
+                {% endif %}
+            </action>
+            {% endif %}
+        </div>
+    </div>
+    <hr class="sep">
+    <div class="video-author">
+        <div>
+            <info><i class="fa fa-autor fa-user-circle fa-3x"></i></info>
+        </div>
+        <div>
+            <info>{{ video.user.username }}</info>
+        </div>
+    </div>
+    <div class="video-description">
+        <div style="margin-left: 120px;">
+                <span>
+                    {{ video.description }}
+                </span>
+        </div>
+    </div>
+    <hr class="sep">
+    {% if user.is_authenticated %}
+    <form method="POST" action="{% url 'comment' video.id %}">
+        {% csrf_token %}
+        <div>
+            <fieldset>
+                <legend class="comments-title">New Comment</legend>
+                <div>
+                    <textarea class="comment-input" placeholder="Add a comment ..." name="comment" required></textarea>
+                </div>
+                <div>
+                    <button class="comment-button">Comment</button>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    {% endif %}
+    <div style="margin-top: 50px">
+        {% for comment in comments %}
+        <div style="margin-top: 25px">
+            <div class="comment-author">
+                <div>
+                    <info><i class="fa fa-user-circle fa-2x"></i></info>
+                </div>
+                <div>
+                    <info>{{ comment.user.username }}</info>
+                </div>
+            </div>
+            <div class="comment-message">
+                <div style="margin-left: 67px;">
+                            <span>
+                                {{ comment.body }}
+                            </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<footer>
+    <p>&copy 2022 WeTube, Inc.</p>
+</footer>
+</body>
+</html>
