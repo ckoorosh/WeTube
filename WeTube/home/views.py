@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from proxy_verification import proxy_required
 from videos.models import Video
 
 
