@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path, re_path
 
 from proxy_app.views import proxy_view
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', proxy_view),
     re_path(r'^accounts/', proxy_view),
     re_path(r'^videos/', proxy_view),
     re_path(r'^static/', proxy_view),
 ]
+
