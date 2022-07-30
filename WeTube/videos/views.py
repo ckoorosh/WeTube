@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, CreateView
+
+from proxy_verification import proxy_required
 from .models import Video, Comment, Tag
 from .forms import UploadForm
 
@@ -90,6 +92,7 @@ def dislike(request, pk):
     return redirect(request.META['HTTP_REFERER'])
 
 
+@proxy_required
 def add_tag(request, pk, tag):
     if request.user.is_admin:
         video = Video.objects.get(pk=pk)
@@ -99,6 +102,7 @@ def add_tag(request, pk, tag):
     return redirect(request.META['HTTP_REFERER'])
 
 
+@proxy_required
 def ban(request, pk):
     if request.user.is_admin:
         video = Video.objects.get(pk=pk)

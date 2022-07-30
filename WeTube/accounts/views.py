@@ -2,6 +2,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from proxy_verification import proxy_required
 from .models import User
 from videos.models import Ticket, TicketResponse
 
@@ -85,6 +86,7 @@ def send_ticket(request):
     return redirect(request.META['HTTP_REFERER'])
 
 
+# TODO: ?
 def respond_ticket(request, pk):
     if request.method == "POST":
         if request.user.is_admin or request.user.is_manager:
@@ -100,6 +102,7 @@ def respond_ticket(request, pk):
     return redirect(request.META['HTTP_REFERER'])
 
 
+# TODO: ?
 def change_ticket_status(request, pk):
     if request.method == "POST":
         if request.user.is_admin or request.user.is_manager:
@@ -112,6 +115,7 @@ def change_ticket_status(request, pk):
     return redirect(request.META['HTTP_REFERER'])
 
 
+@proxy_required
 def unstrike(request, pk):
     if request.user.is_admin:
         user = User.objects.get(pk=pk)
