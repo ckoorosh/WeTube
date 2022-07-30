@@ -38,11 +38,6 @@
             <a href="{% url 'upload' %}" class="fa fa-round fa-upload"></a>
             {% endif %}
         </upload>
-        <account>
-            {% if not user.is_authenticated %}
-            <a href="{% url 'admin-login' %}" class="fa fa-round fa-magic"></a>
-            {% endif %}
-        </account>
     </div>
 
 </div>
