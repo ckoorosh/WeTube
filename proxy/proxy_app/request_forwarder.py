@@ -1,12 +1,8 @@
 import requests
 
 
-def _refine_headers(headers, port):
-    result = {}
-    for key, value in headers.items():
-        result[key] = value
-    result['REMOTE_PORT'] = port
-    return result
+def _refine_headers(headers):
+    return headers
 
 
 def _refine_params(params):
@@ -30,7 +26,7 @@ class RequestForwarder:
 
     def forward(self, request):
         data = request.body
-        headers = _refine_headers(request.headers, request.META.get('SERVER_PORT'))
+        headers = _refine_headers(request.headers)
         params = request.GET
         url = f'{self.server_url}{request.path}'
         response = requests.request(request.method,
