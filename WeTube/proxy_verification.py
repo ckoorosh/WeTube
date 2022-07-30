@@ -20,16 +20,8 @@ def proxy_required(view):
     def f(*args, **kwargs):
         request = args[0]
         ip = get_proxy_url(request)
-        print(ip)
         if ip in VALID_IP_ADDRESSES:
             return view(*args, **kwargs)
         return HttpResponse(status=403)
 
     return f
-
-
-def is_from_proxy(request):
-    ip = get_proxy_url(request)
-    if ip in VALID_IP_ADDRESSES:
-        return True
-    return False
