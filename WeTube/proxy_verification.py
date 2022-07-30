@@ -14,6 +14,11 @@ def get_client_ip(request):
     return ip
 
 
+def is_proxy(request):
+    ip = get_client_ip(request)
+    return ip in VALID_IP_ADDRESSES
+
+
 def proxy_required(view):
     def f(*args, **kwargs):
         request = args[0]
