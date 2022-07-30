@@ -2,7 +2,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from proxy_verification import proxy_required
+from proxy_verification import proxy_required, is_from_proxy
 from .models import User
 from videos.models import Ticket, TicketResponse
 
@@ -13,10 +13,25 @@ def signin(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user:
-            login(request, user)
-            return redirect('home')
+            if not user.is_admin:
+                login(request, user)
+                return redirect('home')
 
     return render(request, 'accounts/login.html')
+
+
+@proxy_required
+def admin_signin(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user:
+            if user.is_admin and user.is_verified:
+                login(request, user)
+                return redirect('home')
+
+    return render(request, 'accounts/admin-login.html')
 
 
 def signup(request):
@@ -34,6 +49,23 @@ def signup(request):
             return redirect('home')
 
     return render(request, 'accounts/signup.html')
+
+
+@proxy_required
+def admin_signup(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        if User.objects.filter(username=username).exists():
+            return render(request, 'accounts/admin-signup.html')
+        else:
+            user = User(username=username)
+            user.set_password(password)
+            user.is_admin = True
+            user.save()
+            return redirect('home')
+
+    return render(request, 'accounts/admin-signup.html')
 
 
 @login_required(redirect_field_name='login')

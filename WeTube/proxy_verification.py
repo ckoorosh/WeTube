@@ -23,3 +23,10 @@ def proxy_required(view):
         return HttpResponse(status=403)
 
     return f
+
+
+def is_from_proxy(request):
+    ip = get_client_ip(request)
+    if ip in VALID_IP_ADDRESSES:
+        return True
+    return False

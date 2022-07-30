@@ -6,7 +6,9 @@ from accounts import views
 
 urlpatterns = [
     path('login/', views.signin, name='login'),
+    path('admin-login/', views.admin_signin, name='admin-login'),
     path('signup/', views.signup, name='signup'),
+    path('admin-signup/', views.admin_signup, name='admin-signup'),
     path('logout/', views.logout_user, name='logout'),
     path('profile/', views.show_account, name='account'),
     path('ticket/', views.send_ticket, name='ticket'),
