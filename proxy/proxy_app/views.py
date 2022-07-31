@@ -23,8 +23,8 @@ def home(request):
 
 def admin_signin(request):
     if request.method == "POST":
-        response, status_code = forwarder.forward(request)
-        if status_code == 200:
+        response = forwarder.forward(request)
+        if response.status_code == 200:
             user_id = int(response.text)
             user, created = User.objects.get_or_create(id=user_id)
             if created:
@@ -37,8 +37,8 @@ def admin_signin(request):
 
 def admin_signup(request):
     if request.method == "POST":
-        response, status_code = forwarder.forward(request)
-        if status_code == 200:
+        response = forwarder.forward(request)
+        if response.status_code == 200:
             return redirect('home')
 
     return render(request, 'proxy_app/admin-signup.html')
