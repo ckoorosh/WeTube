@@ -118,10 +118,9 @@ def send_ticket(request):
     return redirect(request.META['HTTP_REFERER'])
 
 
-# TODO: ?
 def respond_ticket(request, pk):
     if request.method == "POST":
-        if request.user.is_admin or request.user.is_manager:
+        if request.user.is_manager or (is_from_proxy(request) and request.user.is_admin):
             ticket = Ticket.objects.get(pk=pk)
             if ticket:
                 body = request.POST.get('body', None)
@@ -134,10 +133,9 @@ def respond_ticket(request, pk):
     return redirect(request.META['HTTP_REFERER'])
 
 
-# TODO: ?
 def change_ticket_status(request, pk):
     if request.method == "POST":
-        if request.user.is_admin or request.user.is_manager:
+        if request.user.is_manager or (is_from_proxy(request) and request.user.is_admin):
             ticket = Ticket.objects.get(pk=pk)
             if ticket:
                 if ticket.status != 'c':
