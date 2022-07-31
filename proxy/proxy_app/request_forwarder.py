@@ -33,6 +33,9 @@ class RequestForwarder:
                                     url,
                                     params=_refine_params(params),
                                     data=data,
-                                    headers=headers)
-
-        return response.content, response.status_code
+                                    headers=headers,
+                                    )
+        if len(response.history) > 0:
+            last_response = response.history[-1]
+            return last_response
+        return response

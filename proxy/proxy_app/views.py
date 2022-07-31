@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
@@ -10,5 +10,8 @@ forwarder = RequestForwarder(scheme='http',
 
 
 def proxy_view(request):
-    content, status_code = forwarder.forward(request)
-    return HttpResponse(content, status=status_code)
+    response = forwarder.forward(request)
+    if response.status_code == 302:
+        # Here we need to redirect to the value of 'Location' header
+        return HttpResponseRedirect(response.headers.get('Location'))
+    return HttpResponse(response.content, status=response.status_code)
