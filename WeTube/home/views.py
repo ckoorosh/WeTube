@@ -2,11 +2,22 @@ from django.shortcuts import render
 
 from proxy_verification import proxy_required
 from videos.models import Video
+from accounts.models import User
+
+
+def get_user(request):
+    if 'user-id' in request.headers:
+        user_id = int(request.headers['user-id'])
+        if user_id:
+            return User.objects.get(id=user_id)
+
+    return request.user
 
 
 def home(request):
-    if request.user.is_authenticated:
-        if request.user.is_admin or request.user.is_manager:
+    user = get_user(request)
+    if user.is_authenticated:
+        if user.is_admin or user.is_manager:
             videos = Video.objects.all()
         else:
             videos = Video.objects.filter(banned=False)
@@ -16,6 +27,7 @@ def home(request):
     context = {
         'videos': videos,
         'trending': trending,
+        'user': user
     }
     return render(request, 'home/home.html', context)
 

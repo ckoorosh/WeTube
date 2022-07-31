@@ -4,7 +4,17 @@ from django.views.generic import DetailView, CreateView
 
 from proxy_verification import proxy_required
 from .models import Video, Comment, Tag
+from accounts.models import User
 from .forms import UploadForm
+
+
+def get_user(request):
+    if 'user-id' in request.headers:
+        user_id = int(request.headers['user-id'])
+        if user_id:
+            return User.objects.get(id=user_id)
+
+    return request.user
 
 
 class UploadView(CreateView):
@@ -35,18 +45,19 @@ def search(request):
         query = request.POST.get('title', None)
         if query:
             results = Video.objects.filter(title__contains=query)
-            return render(request, 'videos/search.html', {'videos': results, 'query': query})
+            return render(request, 'videos/search.html', {'videos': results, 'query': query, 'user': get_user(request)})
 
-    return render(request, 'videos/home.html')
+    return render(request, 'videos/home.html', context={'user': get_user(request)})
 
 
 @login_required(redirect_field_name='login')
 def send_comment(request, pk):
+    user = get_user(request)
     if request.method == "POST":
         query = request.POST.get('comment', None)
         if query:
             video = Video.objects.get(pk=pk)
-            comment = Comment(body=query, user=request.user, video=video)
+            comment = Comment(body=query, user=user, video=video)
             comment.save()
 
     return redirect(request.META['HTTP_REFERER'])
@@ -56,7 +67,7 @@ def send_comment(request, pk):
 def like(request, pk):
     video = Video.objects.get(pk=pk)
     if video:
-        user = request.user
+        user = get_user(request)
         if video.likes.filter(pk=user.pk).exists():
             video.likes.remove(user)
             video.likes_count -= 1
@@ -76,7 +87,7 @@ def like(request, pk):
 def dislike(request, pk):
     video = Video.objects.get(pk=pk)
     if video:
-        user = request.user
+        user = get_user(request)
         if video.dislikes.filter(pk=user.pk).exists():
             video.dislikes.remove(user)
             video.dislikes_count -= 1
@@ -94,17 +105,19 @@ def dislike(request, pk):
 
 @proxy_required
 def add_tag(request, pk, tag):
-    if request.user.is_admin:
+    user = get_user(request)
+    if user.is_admin:
         video = Video.objects.get(pk=pk)
         if video:
             video.tag.set_tag(tag)
 
-    return redirect(request.META['HTTP_REFERER'])
+    return redirect('watch', pk)
 
 
 @proxy_required
 def ban(request, pk):
-    if request.user.is_admin:
+    user = get_user(request)
+    if user.is_admin:
         video = Video.objects.get(pk=pk)
         if video:
             if video.banned:
@@ -123,7 +136,7 @@ def ban(request, pk):
                     if next_video.banned:
                         user.set_strike(True)
 
-    return redirect(request.META['HTTP_REFERER'])
+    return redirect('watch', pk)
 
 
 def watch(request, pk):
@@ -134,7 +147,8 @@ def watch(request, pk):
         comments = video.comment_set.all()
         context = {
             'video': video,
-            'comments': comments
+            'comments': comments,
+            'user': get_user(request)
         }
         return render(request, 'videos/watch.html', context=context)
     else:
