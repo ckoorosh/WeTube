@@ -128,10 +128,7 @@ def send_ticket(request):
             ticket = Ticket(title=title, body=body, user=user)
             ticket.save()
 
-    if user.is_admin:
-        return show_account(request)
-    else:
-        return redirect('account')
+    return redirect('account')
 
 
 def respond_ticket(request, pk):
@@ -147,10 +144,7 @@ def respond_ticket(request, pk):
                     ticket.response = response
                     ticket.save()
 
-    if user.is_admin:
-        return show_account(request)
-    else:
-        return redirect('account')
+    return redirect('account')
 
 
 def change_ticket_status(request, pk):
@@ -174,10 +168,7 @@ def unstrike(request, pk):
         if user:
             user.set_strike(False)
 
-    if user.is_admin:
-        return show_account(request)
-    else:
-        return redirect('account')
+    return redirect('account')
 
 
 def verify(request, pk):

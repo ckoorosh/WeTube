@@ -35,6 +35,7 @@ class RequestForwarder:
         url = f'{self.server_url}{request.path}'
         response = requests.request(request.method,
                                     url,
+                                    headers=headers,
                                     params=_refine_params(params),
                                     data=data,
                                     )
