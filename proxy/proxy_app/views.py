@@ -26,7 +26,7 @@ def admin_signin(request):
         response = forwarder.forward(request)
         if response.status_code == 200:
             user_id = int(response.text)
-            user, created = User.objects.get_or_create(id=user_id)
+            user, created = User.objects.get_or_create(id=user_id, username=request.POST['username'])
             if created:
                 user.save()
             login(request, user)
