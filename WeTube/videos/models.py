@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.files.storage import default_storage
 from django.db import models
 from django.utils import timezone
@@ -30,7 +31,14 @@ class Tag(models.Model):
 
 
 class Video(models.Model):
-    file = models.FileField(default='', upload_to='')
+
+    def validate_file(file):
+        file_size = file.file.size
+        megabyte_limit = 50.0
+        if file_size > megabyte_limit * 1024 * 1024:
+            raise ValidationError("Max file size is %sMB" % str(megabyte_limit))
+
+    file = models.FileField(default='', upload_to='', validators=[validate_file])
     title = models.CharField(max_length=1000)
     date_posted = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
