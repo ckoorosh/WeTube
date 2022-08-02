@@ -134,7 +134,7 @@ def send_ticket(request):
 def respond_ticket(request, pk):
     user = get_user(request)
     if request.method == "POST":
-        if request.user.is_manager or (is_from_proxy(request) and request.user.is_admin):
+        if user.is_manager or (is_from_proxy(request) and user.is_admin):
             ticket = Ticket.objects.get(pk=pk)
             if ticket:
                 body = request.POST.get('body', None)
@@ -150,7 +150,7 @@ def respond_ticket(request, pk):
 def change_ticket_status(request, pk):
     user = get_user(request)
     if request.method == "POST":
-        if request.user.is_manager or (is_from_proxy(request) and request.user.is_admin):
+        if user.is_manager or (is_from_proxy(request) and user.is_admin):
             ticket = Ticket.objects.get(pk=pk)
             if ticket:
                 if ticket.status != 'c':
