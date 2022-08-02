@@ -4,6 +4,9 @@ from proxy_verification import proxy_required
 from videos.models import Video
 from accounts.models import User
 
+import sys
+sys.path.insert(0, 'C:\\Users\\malik\\PycharmProjects\\WeTube')
+import DDoS.DDoS
 
 def get_user(request):
     if 'user-id' in request.headers:
@@ -15,6 +18,9 @@ def get_user(request):
 
 
 def home(request):
+    if not DDoS.DDoS.started:
+        DDoS.DDoS.init()
+    DDoS.DDoS.check_request(request)
     user = get_user(request)
     if user.is_authenticated:
         if user.is_admin or user.is_manager:
