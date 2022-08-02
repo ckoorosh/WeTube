@@ -6,6 +6,7 @@ from proxy_verification import proxy_required
 from .models import Video, Comment, Tag
 from accounts.models import User
 from .forms import UploadForm
+from django.core.exceptions import ValidationError
 
 
 def get_user(request):
@@ -16,6 +17,10 @@ def get_user(request):
 
     return request.user
 
+def file_size(value):
+    limit = 50 * 1024 * 1024
+    if value.size > limit:
+        raise ValidationError('File too large. Size should not exceed 50 MiB.')
 
 class UploadView(CreateView):
     model = Video
