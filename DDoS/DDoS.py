@@ -4,9 +4,9 @@ from datetime import datetime
 from threading import Thread
 
 ip_list = {}
-list_safe =[]
+list_safe = []
 started = False
-completeName = os.path.join('C:\\Users\\malik\\PycharmProjects\\WeTube\\DDoS', 'log'+".txt")
+completeName = os.path.join('C:\\Users\\malik\\PycharmProjects\\WeTube\\DDoS', 'log' + ".txt")
 log = open(completeName, "a")
 
 
@@ -38,4 +38,3 @@ def checker():
             log.write("Current Time is :" + str(current_time) + ' and DDoS detected\n')
         ip_list = {}
         time.sleep(1)
-

@@ -13,5 +13,4 @@ while True:
     status = 'up' if response_list.rtt_avg_ms < TIMEOUT else 'down'
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print("Current Time is :",current_time, 'and server is', status)
-
+    print("Current Time is :", current_time, 'and server is', status)

@@ -6,7 +6,7 @@ IP = '127.0.0.1'
 PORT = '8000'
 
 
-class thread(threading.Thread):
+class AttackerThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
 
@@ -19,4 +19,4 @@ class thread(threading.Thread):
 
 
 for i in range(NUMBER_OF_THREADS):
-    thread().start()
+    AttackerThread().start()
