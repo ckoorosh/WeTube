@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-i_c^qbc9n2q3k#@of3h!f=6f@)fal(ag#dr4i_=y@ec_)asjk$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '*', 'localhost']
 
 # Application definition
 
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.DDoS'
 ]
 
 ROOT_URLCONF = 'WeTube.urls'
