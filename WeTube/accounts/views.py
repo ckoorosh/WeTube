@@ -1,12 +1,13 @@
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.core import serializers
 
 from proxy_verification import proxy_required, is_from_proxy
 from .models import User
 from videos.models import Ticket, TicketResponse
+
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__),'..', '..'))
 
 
 def get_user(request):
