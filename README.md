@@ -69,4 +69,4 @@ http://127.0.0.1:8080
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/ckoorosh/WeTube/blob/main/LICENSE) for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/ckoorosh/WeTube/blob/master/LICENSE) for more information.
